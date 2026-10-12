@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: crm-chat-qa-advisor
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:rikkei_crm}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.2
+      embedding:
+        options:
+          model: text-embedding-3-small
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.rikkei.crmchat: INFO
+    org.springframework.ai: INFO   # để thấy advisor nhúng context
